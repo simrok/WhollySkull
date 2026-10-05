@@ -42,7 +42,7 @@ public class PlayeyKickState : PlayerState
                 if (monster == null) continue;
                 if (hitTargets.Add(monster))    // 이번 공격에서 처음 맞는 적일 때만 true
                 {
-                    monster.GetDamage(context.kickDamage);
+                    monster.TakeDamage(context.kickDamage);
                 }
             }
         }

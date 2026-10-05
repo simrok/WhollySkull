@@ -2,9 +2,9 @@ using UnityEngine;
 using System.Collections;
 [RequireComponent(typeof(Rigidbody))]
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IDamageable
 {
-    public PlayerContext context = new PlayerContext();
+    public PlayerData context = new PlayerData();
     private StateMachine stateMachine;
 
     // 상태 객체는 Awake에서 한 번 만들어두고 계속 재사용
@@ -37,7 +37,7 @@ public class Player : MonoBehaviour
         stateMachine = new StateMachine(idleState);     // 시작 상태
 
         context.playerHp = context.playerMaxHp;
-        context.kickDamage = 10f;
+        context.kickDamage = 10;
         context.isInvincible = false;
     }
 
@@ -90,6 +90,17 @@ public class Player : MonoBehaviour
 
         // 5) 기본: 방향키가 있으면 Move, 없으면 Idle
         stateMachine.ChangeState(context.PlayerMovement.Dir != Vector3.zero ? moveState : idleState);
+    }
+
+    public void TakeDamage(int damage)
+    {
+        context.playerHp -= damage;
+        Debug.Log("Player가 " + damage + " 만큼의 데미지를 받았다. HP: " + context.playerHp);
+        if (context.playerHp <= 0)
+        {
+            Debug.Log("Player가 사망했다.");
+            context.playerHp = 0;
+        }
     }
 
     //private IEnumerator GetHitRoutine()

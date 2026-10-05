@@ -2,7 +2,7 @@ using UnityEngine;
 
 // 플레이어 컨텍스트
 [System.Serializable]
-public class PlayerContext
+public class PlayerData
 {
     // 컴포넌트 참조
     public Rigidbody Rb { get; private set; }
@@ -24,14 +24,14 @@ public class PlayerContext
     public float playerMaxHp = 100f;
 
     // Slice
-    public float sliceDamage = 10f; // 조정 필요
+    public int sliceDamage = 10; // 조정 필요
     public float sliceMoveSpeed = 8f;   // 8 * 0.3초 동안 2.4 유닛 이동
     public AnimationCurve sliceSpeedCurve; // Slice 애니메이션 시, 마지막에 걷는 속도 곡선
     public float sliceDuration = 0.6f;    // 공격 시간
     public float sliceRecoveryTime = 0.15f; // 재입력 불가 구간
 
     // Kick
-    public float kickDamage = 5f;
+    public int kickDamage = 5;
     public float kickDuration = 0.7f;    // 공격 시간
     public float kickRecoveryTime = 0.15f; // 재입력 불가 구간 
 
