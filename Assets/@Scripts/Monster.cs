@@ -2,74 +2,71 @@ using UnityEngine;
 
 public class Monster : MonoBehaviour, IDamageable
 {
-    private Rigidbody rb;
-    public MonsterContext context = new MonsterContext();
+    protected GameObject Player;
     
-    [SerializeField] private Collider[] colls;
-    Collider[] playerInsideZone;
-    Collider[] playerOutsideZone;
+    // 컴포넌트
+    protected Rigidbody rb;
+    protected Animator animator;
+    [SerializeField] protected MonsterData data;
 
-    private void Awake()
+    // 데이터
+    protected int currentHealth;
+    protected bool isDead;
+
+    //[SerializeField] private Collider[] colls;
+    //Collider[] playerInsideZone;
+    //Collider[] playerOutsideZone;
+    protected virtual void Awake()
     {
-        context.monsterHp = context.monsterMaxHp;
+        currentHealth = data.maxHealth;
+        rb = GetComponentInChildren<Rigidbody>();
+        animator = GetComponentInChildren<Animator>();
     }
 
-    public void Death()
+    public void DropBone() 
     {
-        Destroy(gameObject);
+        int dropBone = Random.Range(data.minRewardBone, data.maxRewardBone+1);
+        Debug.Log("평온의 뼛가루 드랍 개수: " + dropBone);
+       // PlayerState.instance.GetBone += dropBone;
     }
 
-    public void GetDamage(float attackDamage)
+    public virtual void TakeDamage(int damage)
     {
-        // 플레이어의 공격에 따른 데미지 
-        // 1. 일반 공격: 휘두르기
-        context.monsterHp -= attackDamage;
-        Debug.Log("Player에게 공격을 받았습니다. 현재 Hp: " + context.monsterHp);
-        //{
-        //    context.monsterHp = 0;
-        //    Death();
-        //}
+        // 이미 죽었는지 확인 (가드)
+        if (isDead) return;
+
+        // 체력 깎기
+        currentHealth -= damage;
+        Debug.Log(data.monsterName + "가 " + damage + " 만큼의 데미지를 받았다. / hp: " + currentHealth);
+
+        if (currentHealth <= 0)
+        {
+            Debug.Log(data.monsterName + "가 사망했다.");
+            currentHealth = 0;
+            Die();
+        }
+    }
+    protected virtual void Die()
+    {
+        // 평온의 뼛가루 드랍
+        DropBone();
+        // 오브젝트 정리
+        Destroy(gameObject, 2f);    // 2초 뒤 삭제
     }
 
     // Player에게 공격을 함
 
     // Player가 가까이 오면 근처에 접근하면서 공격을 함
-    public void NearAttack(Vector3 pos)
-    {
-
-    }
 
     // 주변 동료 몬스터가 공격당했을 때 같이 '플레이어 공격' 태세로 전환
-    public void NearEnemyAttack(Vector3 pos)
-    {
-        // 반지름 2의 구 안에 콜라이더 붙은 오브젝트들 추출해서 배열에 저장
-       Collider[] colls = Physics.OverlapSphere(transform.position, 2f);
+    //public void NearEnemyAttack(Vector3 pos)
+    //{
+    //    // 반지름 2의 구 안에 콜라이더 붙은 오브젝트들 추출해서 배열에 저장
+    //   Collider[] colls = Physics.OverlapSphere(transform.position, 2f);
 
-       foreach (Collider coll in colls)
-       {
-            Player player = coll.GetComponent<Player>();
-       }
-    }
-
-
-    private void FixedUpdate()
-    {
-        playerInsideZone = Physics.OverlapSphere(this.transform.position, 10f);
-
-        //EnableHide(playerInsideZone, false);
-
-        //playerOutsideZone = colls.Except(playerInsideZone).ToArray();
-
-        //EnableHide(playerOutsideZone, true);
-    }
-
-    private void EnableHide(Collider player, bool enable)
-    {
-        player.GetComponent<MeshRenderer>().enabled = enable;
-    }
-
-    public bool TakeDamage(DamageMessage damageMessage, int amount)
-    {
-        throw new System.NotImplementedException();
-    }
+    //   foreach (Collider coll in colls)
+    //   {
+    //        Player player = coll.GetComponent<Player>();
+    //   }
+    //}
 }
