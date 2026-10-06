@@ -12,6 +12,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float rotationSmooth = 15f;
 
     private Rigidbody rb;
+    private Transform cam;  // 이동 방향의 기준이 되는 카메라
 
     private Vector3 dir;
     public Vector3 Dir => dir;
@@ -27,13 +28,17 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         canMove = true;
+        cam = Camera.main != null ? Camera.main.transform : null;
     }
 
     private void Update()
     {
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
-        dir = new Vector3(h, 0f, v).normalized;
+        // 방향키 입력을 카메라가 바라보는 방향(Y회전) 기준으로 돌림
+        // 카메라 Y회전이 0이면(전투 맵) 기존과 완전히 같음
+        float camYaw = cam != null ? cam.eulerAngles.y : 0f;
+        dir = (Quaternion.Euler(0f, camYaw, 0f) * new Vector3(h, 0f, v)).normalized;
 
         // 좌쉬프트 => 달리기 true
         if (Input.GetKeyDown(KeyCode.LeftShift)) { isRunning = !isRunning; }
