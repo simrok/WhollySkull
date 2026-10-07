@@ -34,7 +34,7 @@ public abstract class BaseState<T> : IState
 
 public abstract class PlayerState : BaseState<Player>
 {
-    protected PlayerData context => owner.context;  // 모든 상태가 같은 컨텍스트를 사용
+    protected PlayerData context => owner.data;  // 모든 상태가 같은 컨텍스트를 사용
 
     public PlayerState(Player _player) : base(_player) { }
 }

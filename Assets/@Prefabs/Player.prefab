@@ -4170,7 +4170,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e792c9d87eb8a347845c93dd4724a29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
-  context:
+  data:
     sliceVfxAnchor: {fileID: 7597936769871657828}
     playerHp: 0
     playerMaxHp: 100

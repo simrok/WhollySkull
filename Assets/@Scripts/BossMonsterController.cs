@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class BossMonsterController : Monster
 {
+    [SerializeField] BossSkill slamSkill;
+
     // 보스 고유 필드
     [SerializeField] int phaseCount;   // 해당 보스의 페이즈 개수
     private int currentPhase = 1;    // 현재 보스전 페이즈
@@ -25,10 +27,10 @@ public class BossMonsterController : Monster
     }
 
     private void Update()
-    {   
+    {
         // 디버깅용
-        //if (Input.GetKeyDown(KeyCode.K)) 
-        //    TakeDamage(10);
+        if (Input.GetKeyDown(KeyCode.K))
+            StartCoroutine(slamSkill.Execute(this));
     }
 
     public override void TakeDamage(int damage)

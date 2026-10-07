@@ -4,7 +4,7 @@ using System.Collections;
 
 public class Player : MonoBehaviour, IDamageable
 {
-    public PlayerData context = new PlayerData();
+    [UnityEngine.Serialization.FormerlySerializedAs("context")] public PlayerData data = new PlayerData();
     private StateMachine stateMachine;
 
     // 상태 객체는 Awake에서 한 번 만들어두고 계속 재사용
@@ -24,7 +24,7 @@ public class Player : MonoBehaviour, IDamageable
 
     private void Awake()
     {
-        context.Init(GetComponent<Rigidbody>(), GetComponentInChildren<Animator>(), GetComponent<PlayerMovement>());
+        data.Init(GetComponent<Rigidbody>(), GetComponentInChildren<Animator>(), GetComponent<PlayerMovement>());
 
         idleState = new PlayerIdleState(this);
         moveState = new PlayerMoveState(this);
@@ -36,16 +36,16 @@ public class Player : MonoBehaviour, IDamageable
 
         stateMachine = new StateMachine(idleState);     // 시작 상태
 
-        context.playerHp = context.playerMaxHp;
-        context.kickDamage = 10;
-        context.isInvincible = false;
+        data.playerHp = data.playerMaxHp;
+        data.kickDamage = 10;
+        data.isInvincible = false;
     }
 
     private void Update()
     {
         // 애니메이션: 방향키 입력이 있으면 1:Move, 없으면 0:Idle 
-        float speed = context.PlayerMovement.CurrentSpeed;  // 멈춤 0, 걷기 3, 뛰기 8
-        context.Animator.SetFloat("Speed", speed, 0.1f, Time.deltaTime);
+        float speed = data.PlayerMovement.CurrentSpeed;  // 멈춤 0, 걷기 3, 뛰기 8
+        data.Animator.SetFloat("Speed", speed, 0.1f, Time.deltaTime);
 
         DecideState();  // Player가 State를 판단
         stateMachine.UpdateState(); // 현재 상태를 계속 행동함
@@ -61,16 +61,16 @@ public class Player : MonoBehaviour, IDamageable
         IState cur = stateMachine.CurrentState;
 
         // 1) 죽음
-        if (context.playerHp <=0 )
+        if (data.playerHp <=0 )
         {
             stateMachine.ChangeState(deadState);
             return;
         }
         //2) 피격 (무적이면 무시)
-        if (context.gotHit)
+        if (data.gotHit)
         {
-            context.gotHit = false; // 피격 신호 끄기
-            if (!context.isInvincible)
+            data.gotHit = false; // 피격 신호 끄기
+            if (!data.isInvincible)
             {
                 stateMachine.ChangeState(getHitState);
                 return;
@@ -89,17 +89,20 @@ public class Player : MonoBehaviour, IDamageable
         if (Input.GetKeyDown(KeyCode.D)) { stateMachine.ChangeState(sliceState); return; }     // 칼로 베기
 
         // 5) 기본: 방향키가 있으면 Move, 없으면 Idle
-        stateMachine.ChangeState(context.PlayerMovement.Dir != Vector3.zero ? moveState : idleState);
+        stateMachine.ChangeState(data.PlayerMovement.Dir != Vector3.zero ? moveState : idleState);
     }
 
     public void TakeDamage(int damage)
     {
-        context.playerHp -= damage;
-        Debug.Log("Player가 " + damage + " 만큼의 데미지를 받았다. HP: " + context.playerHp);
-        if (context.playerHp <= 0)
+        // 무적 상태이면 무시
+        if (data.isInvincible) return;
+
+        data.playerHp -= damage;
+        Debug.Log("Player가 " + damage + " 만큼의 데미지를 받았다. HP: " + data.playerHp);
+        if (data.playerHp <= 0)
         {
             Debug.Log("Player가 사망했다.");
-            context.playerHp = 0;
+            data.playerHp = 0;
         }
     }
 

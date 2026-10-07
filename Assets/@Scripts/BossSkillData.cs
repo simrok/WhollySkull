@@ -27,5 +27,11 @@ public class BossSkillData
     // Decal
     public float telegraphTime;     // 예고 시간
 
+    // 플레이이어 반격 시간
+    public float recoverTime;
+
     public GameObject skillPrefab;  // 생성할 스킬 오브젝트
+
+    // vfx 재생
+    public bool vfxPlayed;
 }

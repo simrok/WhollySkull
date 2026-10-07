@@ -46,3 +46,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::VFXPool
   mOrigin:
   - {fileID: 8495064370465872356, guid: f90fc7acf1ef2fa4c85896a9afc17028, type: 3}
+  - {fileID: -2843223586621211106, guid: 2c06eab749cfbca4fa0a5c21aca0c87f, type: 3}

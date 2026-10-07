@@ -63,9 +63,9 @@ Material:
     - _wobble_frequency: 2
     - _wobble_speed: 0.5
     m_Colors:
-    - _aura_base_color: {r: 0, g: 0, b: 0, a: 0}
+    - _aura_base_color: {r: 0, g: 0, b: 0, a: 1}
     - _base_color: {r: 0, g: 0, b: 0, a: 0}
-    - _glow_color: {r: 0, g: 1.6543629, b: 0.21215095, a: 0}
+    - _glow_color: {r: 0.7251801, g: 0, b: 1.654363, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 --- !u!114 &7972110635937092140
