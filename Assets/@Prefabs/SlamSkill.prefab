@@ -45,27 +45,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::B_SlamSkill
   data:
-    skillName: 
-    description: 
+    skillName: Slam
+    description: the cube slams the player
     minPhase: 1
-    cooldown: 1
+    cooldown: 3
     duration: 2
-    range: 0
+    range: 90
     radius: 10
     baseDamage: 10
     attackSpeed: 0
     moveSpeed: 0
     telegraphTime: 1
     recoverTime: 1
-    skillPrefab: {fileID: 0}
-  waitTime: 0.5
-  playerTransform: {fileID: 0}
+    vfxPlayed: 0
+    vfxId: 1
   indicatorRoot: {fileID: 0}
   outline: {fileID: 0}
   fill: {fileID: 0}
-  handTransform: {fileID: 0}
-  hoverHeight: 12
+  cubeTransform: {fileID: 0}
   windUpHeight: 6
   handHalfHeight: 6
+  hoverHeight: 12
   windupTime: 0.3
   slamTime: 0.12

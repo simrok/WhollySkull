@@ -1,0 +1,75 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3707126350038360652
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3229947616270790183}
+  - component: {fileID: 6340337464362756965}
+  m_Layer: 0
+  m_Name: MultiSlamSkill
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3229947616270790183
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3707126350038360652}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6340337464362756965
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3707126350038360652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 479d90f735c88ab44a4d72d02f600472, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BossMultiSlamSkill
+  data:
+    skillName: MultiSlam
+    description: Cubes slam the player
+    minPhase: 1
+    cooldown: 5
+    duration: 2
+    range: 90
+    radius: 5
+    baseDamage: 5
+    attackSpeed: 0
+    moveSpeed: 0
+    telegraphTime: 0.8
+    recoverTime: 1
+    vfxPlayed: 0
+    vfxId: 2
+  indicatorRoot: {fileID: 0}
+  outline: {fileID: 0}
+  fill: {fileID: 0}
+  cubeTransform: {fileID: 0}
+  windUpHeight: 6
+  handHalfHeight: 3
+  hoverHeight: 12
+  windupTime: 0.3
+  slamTime: 0.12
+  indicatorPrefab: {fileID: 3711753523201375081, guid: cbd35e40140ff594998c736f89ca8656, type: 3}
+  spread: 20
+  count: 10
+  interval: 0.5
+  disappearInterval: 1
