@@ -3,6 +3,11 @@ using UnityEngine;
 public class BossMonsterController : Monster
 {
     [SerializeField] BossSkill slamSkill;
+    [SerializeField] BossSkill multiSlamSkill;
+    public Transform playerTransform;
+    // 보스 몬스터의 공격 필드 범위 확인 용 콜라이더
+    [SerializeField] private Collider arenaCollider;
+    public Collider ArenaCollider => arenaCollider;
 
     // 보스 고유 필드
     [SerializeField] int phaseCount;   // 해당 보스의 페이즈 개수
@@ -30,7 +35,21 @@ public class BossMonsterController : Monster
     {
         // 디버깅용
         if (Input.GetKeyDown(KeyCode.K))
-            StartCoroutine(slamSkill.Execute(this));
+        {
+            //Debug.Log(slamSkill == null);
+            if (slamSkill.CanUseSkill(this))
+            {
+                StartCoroutine(slamSkill.Execute(this));
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            //Debug.Log(multiSlamSkill.CanUseSkill(this));
+            if (multiSlamSkill.CanUseSkill(this))
+            {
+                StartCoroutine(multiSlamSkill.Execute(this));
+            }
+        }
     }
 
     public override void TakeDamage(int damage)
@@ -48,5 +67,10 @@ public class BossMonsterController : Monster
         // 사망 애니메이션
 
         base.Die();
+    }
+
+    public bool PlayerInArena()
+    {
+        return arenaCollider.bounds.Contains(playerTransform.position);
     }
 }
